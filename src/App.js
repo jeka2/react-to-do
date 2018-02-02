@@ -26,16 +26,18 @@ handleSubmit(e) {
   this.setState({ todos: [...this.state.todos, newTodo], newToDoDescription: ''});
 }
 
-deleteToDo(index) {
-  console.log("I work")
- //  const todos = this.state.todos.slice();
- //  const del = todos[index].description;
- //  for(let i = 0; i < this.state.todos.length; i++) {
- //  if(this.state.description === del) {
- //    todos[i].pop();
- //  }
- // }
- // this.setState({ todos: todos });
+deleteToDo(indexItem) {
+  var tempState = this.state;
+
+  var newState = tempState.todos.filter((val,index) =>{
+
+    if(index !== indexItem) {
+      return val
+    }
+  });
+
+  this.setState({ todos: newState });
+
 }
 
  toggleComplete(index) {
@@ -50,7 +52,7 @@ deleteToDo(index) {
       <div className="App">
        <ul>
         {this.state.todos.map((todo, index) =>
-          <ToDo key={ index } description={ todo.description } isComplete={ todo.isComplete } toggleComplete={ () => this.toggleComplete(index)}/>
+          <ToDo key={ index } description={ todo.description } isComplete={ todo.isComplete } toggleComplete={ () => this.toggleComplete(index)} deleteOnClick={ () => this.deleteToDo(index) }/>
         )}
        </ul>
        <form onSubmit={ (e) => this.handleSubmit(e) }>
